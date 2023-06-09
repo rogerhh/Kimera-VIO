@@ -36,11 +36,11 @@
 
 namespace VIO {
 
-// TODO(Toni): Fast-forwarding bcs of an issue wiht includes:
-// if you include here the display-definitions.h, a million errors appear, this
-// should go away after properly cleaning what each file includes.
-class DisplayInputBase;
-using DisplayQueue = ThreadsafeQueue<std::unique_ptr<DisplayInputBase>>;
+// // TODO(Toni): Fast-forwarding bcs of an issue wiht includes:
+// // if you include here the display-definitions.h, a million errors appear, this
+// // should go away after properly cleaning what each file includes.
+// class DisplayInputBase;
+// using DisplayQueue = ThreadsafeQueue<std::unique_ptr<DisplayInputBase>>;
 
 class Tracker {
  public:
@@ -54,8 +54,8 @@ class Tracker {
    * @param camera_params Parameters for the camera used for tracking.
    */
   Tracker(const FrontendParams& tracker_params,
-          const Camera::ConstPtr& camera,
-          DisplayQueue* display_queue = nullptr);
+          const Camera::ConstPtr& camera/*,
+          DisplayQueue* display_queue = nullptr*/);
 
   // Tracker parameters.
   const FrontendParams tracker_params_;
@@ -163,7 +163,7 @@ class Tracker {
   OpticalFlowPredictor::UniquePtr optical_flow_predictor_;
 
   // Display queue: push to this queue if you want to display an image.
-  DisplayQueue* display_queue_;
+  // DisplayQueue* display_queue_;
 
   // This is not const as for debugging we want to redirect the image save path
   // where we like.

@@ -22,7 +22,7 @@
 
 #include "kimera-vio/backend/VioBackend-definitions.h"
 #include "kimera-vio/loopclosure/LoopClosureDetector-definitions.h"
-#include "kimera-vio/mesh/Mesh.h"
+// #include "kimera-vio/mesh/Mesh.h"
 
 namespace VIO {
 
@@ -154,73 +154,73 @@ class FrontendLogger {
   bool is_header_written_ransac_stereo_ = false;
 };
 
-class MesherLogger {
- public:
-  KIMERA_POINTER_TYPEDEFS(MesherLogger);
-  KIMERA_DELETE_COPY_CONSTRUCTORS(MesherLogger);
-  MesherLogger();
-  virtual ~MesherLogger() = default;
+// class MesherLogger {
+//  public:
+//   KIMERA_POINTER_TYPEDEFS(MesherLogger);
+//   KIMERA_DELETE_COPY_CONSTRUCTORS(MesherLogger);
+//   MesherLogger();
+//   virtual ~MesherLogger() = default;
+// 
+//   /**
+//    * @brief serializeMesh logs the mesh into a file that can be later read.
+//    * @param mesh Mesh to be serialized to file (this should be const, but the
+//    * serialization function needs to be non-const to be able to deserialize).
+//    */
+//   template <typename T>
+//   void serializeMesh(Mesh<T>& mesh, const std::string& filename) {
+//     std::ofstream mesh_file(output_path_ + '/' + filename);
+//     boost::archive::text_oarchive ar(mesh_file);
+//     ar << mesh;
+//     boost::serialization::serialize(ar, mesh, 0);
+//   }
+// 
+//   /**
+//    * @brief deserializeMesh reads the serialized mesh from a file.
+//    * @param filename File where the mesh was serialized
+//    * @param mesh Mesh where to store deserialized data
+//    */
+//   template <typename T>
+//   void deserializeMesh(const std::string& filename, Mesh<T>* mesh) const {
+//     CHECK_NOTNULL(mesh);
+//     std::ifstream mesh_file(output_path_ + '/' + filename);
+//     boost::archive::text_iarchive ar(mesh_file);
+//     ar >> *mesh;
+//   }
+// 
+//  protected:
+//   std::string output_path_;
+//   bool is_header_written_ = false;
+// };
 
-  /**
-   * @brief serializeMesh logs the mesh into a file that can be later read.
-   * @param mesh Mesh to be serialized to file (this should be const, but the
-   * serialization function needs to be non-const to be able to deserialize).
-   */
-  template <typename T>
-  void serializeMesh(Mesh<T>& mesh, const std::string& filename) {
-    std::ofstream mesh_file(output_path_ + '/' + filename);
-    boost::archive::text_oarchive ar(mesh_file);
-    ar << mesh;
-    boost::serialization::serialize(ar, mesh, 0);
-  }
-
-  /**
-   * @brief deserializeMesh reads the serialized mesh from a file.
-   * @param filename File where the mesh was serialized
-   * @param mesh Mesh where to store deserialized data
-   */
-  template <typename T>
-  void deserializeMesh(const std::string& filename, Mesh<T>* mesh) const {
-    CHECK_NOTNULL(mesh);
-    std::ifstream mesh_file(output_path_ + '/' + filename);
-    boost::archive::text_iarchive ar(mesh_file);
-    ar >> *mesh;
-  }
-
- protected:
-  std::string output_path_;
-  bool is_header_written_ = false;
-};
-
-class VisualizerLogger {
- public:
-  KIMERA_POINTER_TYPEDEFS(VisualizerLogger);
-  KIMERA_DELETE_COPY_CONSTRUCTORS(VisualizerLogger);
-  VisualizerLogger();
-  virtual ~VisualizerLogger() = default;
-
-  void logLandmarks(const PointsWithId& lmks);
-  void logLandmarks(const cv::Mat& lmks);
-  /**
-   * @brief logMesh as a ply file
-   * @param lmks Landmarks (Vertices of the mesh)
-   * @param colors Colors of the vertices
-   * @param polygons_mesh  Mesh polygons
-   * @param timestamp the mesh timestamp
-   * @param log_accumulated_mesh whether to append the mesh vertices/faces
-   */
-  void logMesh(const cv::Mat& lmks,
-               const cv::Mat& colors,
-               const cv::Mat& polygons_mesh,
-               const double& timestamp,
-               bool log_accumulated_mesh = false);
-
- private:
-  // Filenames to be saved in the output folder.
-  OfstreamWrapper output_mesh_;
-  OfstreamWrapper output_landmarks_;
-  bool is_header_written_mesh_ = false;
-};
+// class VisualizerLogger {
+//  public:
+//   KIMERA_POINTER_TYPEDEFS(VisualizerLogger);
+//   KIMERA_DELETE_COPY_CONSTRUCTORS(VisualizerLogger);
+//   VisualizerLogger();
+//   virtual ~VisualizerLogger() = default;
+// 
+//   void logLandmarks(const PointsWithId& lmks);
+//   void logLandmarks(const cv::Mat& lmks);
+//   /**
+//    * @brief logMesh as a ply file
+//    * @param lmks Landmarks (Vertices of the mesh)
+//    * @param colors Colors of the vertices
+//    * @param polygons_mesh  Mesh polygons
+//    * @param timestamp the mesh timestamp
+//    * @param log_accumulated_mesh whether to append the mesh vertices/faces
+//    */
+//   void logMesh(const cv::Mat& lmks,
+//                const cv::Mat& colors,
+//                const cv::Mat& polygons_mesh,
+//                const double& timestamp,
+//                bool log_accumulated_mesh = false);
+// 
+//  private:
+//   // Filenames to be saved in the output folder.
+//   OfstreamWrapper output_mesh_;
+//   OfstreamWrapper output_landmarks_;
+//   bool is_header_written_mesh_ = false;
+// };
 
 class PipelineLogger {
  public:

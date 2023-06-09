@@ -28,12 +28,12 @@
 #include "kimera-vio/frontend/StereoCamera.h"
 #include "kimera-vio/frontend/StereoMatcher.h"
 #include "kimera-vio/frontend/feature-detector/FeatureDetector.h"
-#include "kimera-vio/visualizer/Display.h"
-#include "kimera-vio/visualizer/DisplayFactory.h"
-#include "kimera-vio/visualizer/DisplayModule.h"
-#include "kimera-vio/visualizer/OpenCvVisualizer3D.h"
-#include "kimera-vio/visualizer/Visualizer3D.h"
-#include "kimera-vio/visualizer/Visualizer3DFactory.h"
+// #include "kimera-vio/visualizer/Display.h"
+// #include "kimera-vio/visualizer/DisplayFactory.h"
+// #include "kimera-vio/visualizer/DisplayModule.h"
+// #include "kimera-vio/visualizer/OpenCvVisualizer3D.h"
+// #include "kimera-vio/visualizer/Visualizer3D.h"
+// #include "kimera-vio/visualizer/Visualizer3DFactory.h"
 
 namespace VIO {
 
@@ -44,16 +44,16 @@ using CamPose = cv::Affine3d;
  * @brief The CamPoseDepthMaps struct
  * Stores with id timestamp the depth map and pose of a given camera.
  */
-struct MeshPacket {
-  Timestamp timestamp_;
-  DepthMap depth_map_;
-  gtsam::Pose3 world_pose_body_;
-  CamPose left_cam_rect_pose_;
-  CamPose right_cam_rect_pose_;
-  cv::Mat left_image_rect_;
-  cv::Mat right_image_rect;
-};
-using MeshPackets = std::map<Timestamp, MeshPacket>;
+// struct MeshPacket {
+//   Timestamp timestamp_;
+//   DepthMap depth_map_;
+//   gtsam::Pose3 world_pose_body_;
+//   CamPose left_cam_rect_pose_;
+//   CamPose right_cam_rect_pose_;
+//   cv::Mat left_image_rect_;
+//   cv::Mat right_image_rect;
+// };
+// using MeshPackets = std::map<Timestamp, MeshPacket>;
 
 class EurocPlayground {
  public:
@@ -72,29 +72,29 @@ class EurocPlayground {
    * @param viz_img_in_frustum Visualize actual images inside frustums
    * @param viz_pointcloud Visualize ground-truth 3D pointcloud
    */
-  void visualizeGtData(const bool& viz_traj,
-                       const bool& viz_img_in_frustum,
-                       const bool& viz_pointcloud);
+  // void visualizeGtData(const bool& viz_traj,
+  //                      const bool& viz_img_in_frustum,
+  //                      const bool& viz_pointcloud);
 
   // Very naive!
   void projectVisibleLandmarksToCam(const StereoCamera& stereo_cam,
                                     const Landmarks& lmks);
 
 public:
-  //! Mesh Optimization stuff
-  MeshPackets mesh_packets_;
+  // //! Mesh Optimization stuff
+  // MeshPackets mesh_packets_;
 
   //! Params
   VioParams vio_params_;
 
-  OpenCvVisualizer3D::Ptr visualizer_3d_;
+  // OpenCvVisualizer3D::Ptr visualizer_3d_;
 
   //! Stereo Camera to back/project and do stereo dense reconstruction.
   StereoCamera::ConstPtr stereo_camera_;
   StereoMatcher::UniquePtr stereo_matcher_;
 
-  DisplayModule::UniquePtr display_module_;
-  DisplayModule::InputQueue display_input_queue_;
+  // DisplayModule::UniquePtr display_module_;
+  // DisplayModule::InputQueue display_input_queue_;
 
 
  protected:

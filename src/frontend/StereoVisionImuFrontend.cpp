@@ -33,9 +33,9 @@ StereoVisionImuFrontend::StereoVisionImuFrontend(
     const ImuBias& imu_initial_bias,
     const FrontendParams& frontend_params,
     const StereoCamera::ConstPtr& stereo_camera,
-    DisplayQueue* display_queue,
+    // DisplayQueue* display_queue,
     bool log_output)
-    : VisionImuFrontend(imu_params, imu_initial_bias, display_queue, log_output),
+    : VisionImuFrontend(imu_params, imu_initial_bias, /*display_queue,*/ log_output),
       stereoFrame_k_(nullptr),
       stereoFrame_km1_(nullptr),
       stereoFrame_lkf_(nullptr),
@@ -51,7 +51,7 @@ StereoVisionImuFrontend::StereoVisionImuFrontend(
       frontend_params.feature_detector_params_);
 
   tracker_ =
-      VIO::make_unique<Tracker>(frontend_params_, stereo_camera_->getOriginalLeftCamera(), display_queue);
+      VIO::make_unique<Tracker>(frontend_params_, stereo_camera_->getOriginalLeftCamera()/*, display_queue*/);
 
   if (VLOG_IS_ON(1)) tracker_->tracker_params_.print();
 }
@@ -409,13 +409,13 @@ StatusStereoMeasurementsPtr StereoVisionImuFrontend::processStereoFrame(
       if (FLAGS_log_mono_tracking_images) sendStereoMatchesToLogger();
       if (FLAGS_log_stereo_matching_images) sendMonoTrackingToLogger();
     }
-    if (display_queue_ && FLAGS_visualize_feature_tracks) {
-      displayImage(stereoFrame_k_->timestamp_,
-                   "feature_tracks",
-                   tracker_->getTrackerImage(stereoFrame_lkf_->left_frame_,
-                                            stereoFrame_k_->left_frame_),
-                   display_queue_);
-    }
+    // if (display_queue_ && FLAGS_visualize_feature_tracks) {
+    //   displayImage(stereoFrame_k_->timestamp_,
+    //                "feature_tracks",
+    //                tracker_->getTrackerImage(stereoFrame_lkf_->left_frame_,
+    //                                         stereoFrame_k_->left_frame_),
+    //                display_queue_);
+    // }
 
     // Populate statistics.
     stereoFrame_k_->checkStatusRightKeypoints(&tracker_->debug_info_);

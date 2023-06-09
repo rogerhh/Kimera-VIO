@@ -30,12 +30,12 @@
 #include "kimera-vio/dataprovider/MonoDataProviderModule.h"
 #include "kimera-vio/frontend/VisionImuFrontendModule.h"
 #include "kimera-vio/loopclosure/LoopClosureDetector.h"
-#include "kimera-vio/mesh/MesherModule.h"
+// #include "kimera-vio/mesh/MesherModule.h"    // Roger: We should disable both mesher and visualizer
 #include "kimera-vio/utils/ThreadsafeQueue.h"
-#include "kimera-vio/visualizer/Display.h"
-#include "kimera-vio/visualizer/DisplayModule.h"
-#include "kimera-vio/visualizer/Visualizer3D.h"
-#include "kimera-vio/visualizer/Visualizer3DModule.h"
+// #include "kimera-vio/visualizer/Display.h"
+// #include "kimera-vio/visualizer/DisplayModule.h"
+// #include "kimera-vio/visualizer/Visualizer3D.h"
+// #include "kimera-vio/visualizer/Visualizer3DModule.h"
 
 DECLARE_bool(log_output);
 DECLARE_bool(extract_planes_from_the_scene);
@@ -99,7 +99,7 @@ class Pipeline {
    * @return Returns whether the visualizer_ is running or not. While in
    * parallel mode, it does not return unless shutdown.
    */
-  virtual bool spinViz();
+  // virtual bool spinViz();
 
   /**
    * @brief printStatus Returns a string with useful information to monitor the
@@ -192,15 +192,15 @@ class Pipeline {
     vio_frontend_module_->registerOutputCallback(callback);
   }
 
-  inline void registerMesherOutputCallback(
-      const MesherModule::OutputCallback& callback) {
-    if (mesher_module_) {
-      mesher_module_->registerOutputCallback(callback);
-    } else {
-      LOG(ERROR) << "Attempt to register Mesher output callback, but no "
-                 << "Mesher member is active in pipeline.";
-    }
-  }
+  // inline void registerMesherOutputCallback(
+  //     const MesherModule::OutputCallback& callback) {
+  //   if (mesher_module_) {
+  //     mesher_module_->registerOutputCallback(callback);
+  //   } else {
+  //     LOG(ERROR) << "Attempt to register Mesher output callback, but no "
+  //                << "Mesher member is active in pipeline.";
+  //   }
+  // }
 
   inline void registerLcdOutputCallback(
       const LcdModule::OutputCallback& callback) {
@@ -254,20 +254,20 @@ class Pipeline {
   //! Thread-safe queue for the Backend.
   VioBackendModule::InputQueue backend_input_queue_;
 
-  //! Mesher
-  MesherModule::UniquePtr mesher_module_;
+  // //! Mesher
+  // MesherModule::UniquePtr mesher_module_;
 
   //! Loop Closure Detector
   LcdModule::UniquePtr lcd_module_;
 
-  //! Visualizer: builds images to be displayed
-  VisualizerModule::UniquePtr visualizer_module_;
+  // //! Visualizer: builds images to be displayed
+  // VisualizerModule::UniquePtr visualizer_module_;
 
-  //! Thread-safe queue for the input to the display module
-  DisplayModule::InputQueue display_input_queue_;
+  // //! Thread-safe queue for the input to the display module
+  // DisplayModule::InputQueue display_input_queue_;
 
-  //! Displays actual images and 3D visualization
-  DisplayModule::UniquePtr display_module_;
+  // //! Displays actual images and 3D visualization
+  // DisplayModule::UniquePtr display_module_;
 
   // Atomic Flags
   std::atomic_bool is_backend_ok_ = {true};
@@ -281,7 +281,7 @@ class Pipeline {
   std::unique_ptr<std::thread> backend_thread_ = {nullptr};
   std::unique_ptr<std::thread> mesher_thread_ = {nullptr};
   std::unique_ptr<std::thread> lcd_thread_ = {nullptr};
-  std::unique_ptr<std::thread> visualizer_thread_ = {nullptr};
+  // std::unique_ptr<std::thread> visualizer_thread_ = {nullptr};
 };
 
 }  // namespace VIO

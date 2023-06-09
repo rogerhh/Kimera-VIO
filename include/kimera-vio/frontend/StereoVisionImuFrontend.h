@@ -53,7 +53,7 @@ class StereoVisionImuFrontend : public VisionImuFrontend {
                        const ImuBias& imu_initial_bias,
                        const FrontendParams& tracker_params,
                        const StereoCamera::ConstPtr& stereo_camera,
-                       DisplayQueue* display_queue = nullptr,
+                       // DisplayQueue* display_queue = nullptr,
                        bool log_output = false);
   virtual ~StereoVisionImuFrontend();
 

@@ -27,8 +27,8 @@
 #include "kimera-vio/utils/Statistics.h"
 #include "kimera-vio/utils/ThreadsafeQueue.h"
 #include "kimera-vio/utils/Timer.h"
-#include "kimera-vio/visualizer/Display-definitions.h"
-#include "kimera-vio/visualizer/Visualizer3D-definitions.h"
+// #include "kimera-vio/visualizer/Display-definitions.h"
+// #include "kimera-vio/visualizer/Visualizer3D-definitions.h"
 
 namespace VIO {
 
@@ -43,7 +43,7 @@ class MonoVisionImuFrontend : public VisionImuFrontend {
                      const ImuBias& imu_initial_bias,
                      const MonoFrontendParams& frontend_params,
                      const Camera::ConstPtr& camera,
-                     DisplayQueue* display_queue = nullptr,
+                     // DisplayQueue* display_queue = nullptr,
                      bool log_output = false);
   virtual ~MonoVisionImuFrontend();
 

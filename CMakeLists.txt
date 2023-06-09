@@ -21,7 +21,7 @@ message(STATUS "====================  Dependencies ===========================")
 
 ### System Dependencies
 find_package(Boost REQUIRED COMPONENTS
-  filesystem serialization regex timer date_time thread)
+    filesystem serialization regex timer date_time thread PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 if(NOT TARGET Boost::boost)
   add_library(Boost::boost INTERFACE IMPORTED)
   set_target_properties(Boost::boost PROPERTIES
@@ -29,19 +29,21 @@ if(NOT TARGET Boost::boost)
   INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
 endif()
 
+# find_package(Gflags REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 find_package(Gflags REQUIRED)
+# find_package(Glog 0.3.5 REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 find_package(Glog 0.3.5 REQUIRED)
-find_package(GTSAM REQUIRED)
-find_package(opengv REQUIRED)
-find_package(OpenCV REQUIRED)
-find_package(DBoW2 REQUIRED)
+find_package(GTSAM REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
+find_package(opengv REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
+find_package(OpenCV REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
+find_package(DBoW2 REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 if(NOT TARGET DBoW2::DBoW2)
   add_library(DBoW2::DBoW2 INTERFACE IMPORTED)
   set_target_properties(DBoW2::DBoW2 PROPERTIES
   INTERFACE_LINK_LIBRARIES "${DBoW2_LIBRARIES}"
   INTERFACE_INCLUDE_DIRECTORIES "${DBoW2_INCLUDE_DIRS}")
 endif()
-find_package(KimeraRPGO REQUIRED)
+find_package(KimeraRPGO REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 # Pangolin is optional
 find_package(Pangolin QUIET)
 
@@ -80,8 +82,14 @@ else()
   message(STATUS "Vocabulary file exists, will not download.")
 endif()
 
+if(NOT BUILD_SHARED_LIBS)
+    set(SHARED_LIBS "STATIC")
+else()
+    set(SHARED_LIBS "SHARED")
+endif()
+
 ### Compile the code
-add_library(${PROJECT_NAME} SHARED "")
+add_library(${PROJECT_NAME} ${SHARED_LIBS} "")
 
 ### Add source code for data provider.
 add_subdirectory(include/kimera-vio/dataprovider)
@@ -98,9 +106,9 @@ add_subdirectory(src/backend)
 ### Add source code for factors
 add_subdirectory(include/kimera-vio/factors)
 add_subdirectory(src/factors)
-### Add source code for mesh
-add_subdirectory(include/kimera-vio/mesh)
-add_subdirectory(src/mesh)
+# ### Add source code for mesh
+# add_subdirectory(include/kimera-vio/mesh)
+# add_subdirectory(src/mesh)
 ### Add source code for initialization
 add_subdirectory(include/kimera-vio/initial)
 add_subdirectory(src/initial)
@@ -122,12 +130,15 @@ add_subdirectory(src/logging)
 ### Add source code for imu Frontend
 add_subdirectory(include/kimera-vio/imu-frontend)
 add_subdirectory(src/imu-frontend)
-### Add source code for visualizer.
-add_subdirectory(include/kimera-vio/visualizer)
-add_subdirectory(src/visualizer)
+# ### Add source code for visualizer.
+# add_subdirectory(include/kimera-vio/visualizer)
+# add_subdirectory(src/visualizer)
 ### Add source code for third_party
 add_subdirectory(include/kimera-vio/third_party/triangle)
 add_subdirectory(src/third_party/triangle)
+
+message(STATUS "Roger GLOG_LIBRARIES ${GLOG_LIBRARIES}")
+message(STATUS "Roger GFLAG_LIBRARIES ${GFLAGS_LIBRARIES}")
 
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
@@ -169,7 +180,7 @@ endif(Pangolin_FOUND)
 
 target_compile_options(${PROJECT_NAME}
   PRIVATE -Wall -pipe
-  PRIVATE -march=native
+  # PRIVATE -march=native
 )
 
 # We would just need to say cxx_std_11 if we were using cmake 3.8

@@ -28,9 +28,9 @@ MonoVisionImuFrontend::MonoVisionImuFrontend(
     const ImuBias& imu_initial_bias,
     const MonoFrontendParams& frontend_params,
     const Camera::ConstPtr& camera,
-    DisplayQueue* display_queue,
+    // DisplayQueue* display_queue,
     bool log_output)
-    : VisionImuFrontend(imu_params, imu_initial_bias, display_queue, log_output),
+    : VisionImuFrontend(imu_params, imu_initial_bias, /*display_queue,*/ log_output),
     mono_frame_k_(nullptr),
     mono_frame_km1_(nullptr),
     mono_frame_lkf_(nullptr),
@@ -40,7 +40,7 @@ MonoVisionImuFrontend::MonoVisionImuFrontend(
     frontend_params_(frontend_params) {
   CHECK(mono_camera_);
 
-  tracker_ = VIO::make_unique<Tracker>(frontend_params_, mono_camera_, display_queue);
+  tracker_ = VIO::make_unique<Tracker>(frontend_params_, mono_camera_/*, display_queue*/);
 
   feature_detector_ = VIO::make_unique<FeatureDetector>(
       frontend_params_.feature_detector_params_);
@@ -296,13 +296,13 @@ StatusMonoMeasurementsPtr MonoVisionImuFrontend::processFrame(
     //   if (FLAGS_log_feature_tracks) sendFeatureTracksToLogger();
     //   if (FLAGS_log_mono_matching_images) sendMonoTrackingToLogger();
     // }
-    if (display_queue_ && FLAGS_visualize_feature_tracks) {
-      displayImage(mono_frame_k_->timestamp_,
-                   "feature_tracks",
-                   tracker_->getTrackerImage(*mono_frame_lkf_,
-                                             *mono_frame_k_),
-                   display_queue_);
-    }
+    // if (display_queue_ && FLAGS_visualize_feature_tracks) {
+    //   displayImage(mono_frame_k_->timestamp_,
+    //                "feature_tracks",
+    //                tracker_->getTrackerImage(*mono_frame_lkf_,
+    //                                          *mono_frame_k_),
+    //                display_queue_);
+    // }
 
     mono_frame_lkf_ = mono_frame_k_;
 

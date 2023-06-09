@@ -23,8 +23,8 @@
 #include "kimera-vio/frontend/VisionImuFrontendParams.h"
 #include "kimera-vio/imu-frontend/ImuFrontendParams.h"
 #include "kimera-vio/loopclosure/LoopClosureDetectorParams.h"
-#include "kimera-vio/visualizer/DisplayParams.h"
-#include "kimera-vio/visualizer/OpenCvDisplay.h" // for ocv display params...
+// #include "kimera-vio/visualizer/DisplayParams.h"
+// #include "kimera-vio/visualizer/OpenCvDisplay.h" // for ocv display params...
 
 #include <glog/logging.h>
 
@@ -38,8 +38,8 @@ VioParams::VioParams(const std::string& params_folder_path)
                 "RightCameraParams.yaml",
                 "FrontendParams.yaml",
                 "BackendParams.yaml",
-                "LcdParams.yaml",
-                "DisplayParams.yaml") {}
+                "LcdParams.yaml"/*,
+                "DisplayParams.yaml"*/) {}
 
 VioParams::VioParams(const std::string& params_folder_path,
                      const std::string& pipeline_params_filename,
@@ -48,8 +48,8 @@ VioParams::VioParams(const std::string& params_folder_path,
                      const std::string& right_cam_params_filename,
                      const std::string& frontend_params_filename,
                      const std::string& backend_params_filename,
-                     const std::string& lcd_params_filename,
-                     const std::string& display_params_filename)
+                     const std::string& lcd_params_filename/*,
+                     const std::string& display_params_filename*/)
     : PipelineParams("VioParams"),
       // Actual VIO Parameters
       imu_params_(),
@@ -57,7 +57,7 @@ VioParams::VioParams(const std::string& params_folder_path,
       frontend_params_(),
       backend_params_(std::make_shared<BackendParams>()),
       lcd_params_(),
-      display_params_(std::make_shared<DisplayParams>(DisplayType::kOpenCV)),
+      // display_params_(std::make_shared<DisplayParams>(DisplayType::kOpenCV)),
       frontend_type_(FrontendType::kStereoImu),
       backend_type_(BackendType::kStructuralRegularities),
       parallel_run_(true),
@@ -68,8 +68,8 @@ VioParams::VioParams(const std::string& params_folder_path,
       right_cam_params_filename_(right_cam_params_filename),
       frontend_params_filename_(frontend_params_filename),
       backend_params_filename_(backend_params_filename),
-      lcd_params_filename_(lcd_params_filename),
-      display_params_filename_(display_params_filename) {
+      lcd_params_filename_(lcd_params_filename)/*,
+      display_params_filename_(display_params_filename)*/ {
   if (!params_folder_path.empty()) {
     parseYAML(params_folder_path);
   } else {
@@ -88,9 +88,9 @@ bool VioParams::parseYAML(const std::string& folder_path) {
   int frontend_type;
   yaml_parser.getYamlParam("frontend_type", &frontend_type);
   frontend_type_ = static_cast<FrontendType>(frontend_type);
-  int display_type;
-  yaml_parser.getYamlParam("display_type", &display_type);
-  display_type_ = static_cast<DisplayType>(display_type);
+  // int display_type;
+  // yaml_parser.getYamlParam("display_type", &display_type);
+  // display_type_ = static_cast<DisplayType>(display_type);
   yaml_parser.getYamlParam("parallel_run", &parallel_run_);
 
   // Parse IMU params
@@ -129,27 +129,27 @@ bool VioParams::parseYAML(const std::string& folder_path) {
   // Parse LcdParams
   parsePipelineParams(folder_path + '/' + lcd_params_filename_, &lcd_params_);
 
-  // Parse DisplayParams
-  switch (display_type_) {
-    case DisplayType::kOpenCV: {
-      display_params_ = std::make_shared<OpenCv3dDisplayParams>();
-      break;
-    }
-    case DisplayType::kPangolin: {
-      // We don't have Pangolin specific params so far...
-      display_params_ = std::make_shared<DisplayParams>();
-      break;
-    }
-    default: {
-      LOG(FATAL) << "Unrecognized display type: "
-                 << static_cast<int>(display_type_) << "."
-                 << " 0: OpenCV, 1: Pangolin.";
-    }
-  }
-  CHECK(display_params_);
-  parsePipelineParams(folder_path + '/' + display_params_filename_,
-                      display_params_.get());
-  display_params_->display_type_ = display_type_;
+  // // Parse DisplayParams
+  // switch (display_type_) {
+  //   case DisplayType::kOpenCV: {
+  //     display_params_ = std::make_shared<OpenCv3dDisplayParams>();
+  //     break;
+  //   }
+  //   case DisplayType::kPangolin: {
+  //     // We don't have Pangolin specific params so far...
+  //     display_params_ = std::make_shared<DisplayParams>();
+  //     break;
+  //   }
+  //   default: {
+  //     LOG(FATAL) << "Unrecognized display type: "
+  //                << static_cast<int>(display_type_) << "."
+  //                << " 0: OpenCV, 1: Pangolin.";
+  //   }
+  // }
+  // CHECK(display_params_);
+  // parsePipelineParams(folder_path + '/' + display_params_filename_,
+  //                     display_params_.get());
+  // display_params_->display_type_ = display_type_;
 
   return true;
 }
@@ -162,11 +162,11 @@ void VioParams::print() const {
   CHECK(backend_params_);
   backend_params_->print();
   lcd_params_.print();
-  CHECK(display_params_);
-  display_params_->print();
+  // CHECK(display_params_);
+  // display_params_->print();
   LOG(INFO) << "Frontend Type: " << VIO::to_underlying(frontend_type_);
   LOG(INFO) << "Backend Type: " << VIO::to_underlying(backend_type_);
-  LOG(INFO) << "Display Type: " << VIO::to_underlying(display_type_);
+  // LOG(INFO) << "Display Type: " << VIO::to_underlying(display_type_);
   LOG(INFO) << "Running VIO in " << (parallel_run_ ? "parallel" : "sequential")
             << " mode.";
 }

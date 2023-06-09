@@ -25,7 +25,7 @@
 #include "kimera-vio/frontend/optical-flow/OpticalFlowPredictorFactory.h"
 #include "kimera-vio/utils/Timer.h"
 #include "kimera-vio/utils/UtilsOpenCV.h"
-#include "kimera-vio/visualizer/Display-definitions.h"
+// #include "kimera-vio/visualizer/Display-definitions.h"
 
 DEFINE_bool(visualize_feature_predictions,
             false,
@@ -35,14 +35,14 @@ DEFINE_bool(visualize_feature_predictions,
 namespace VIO {
 
 Tracker::Tracker(const FrontendParams& tracker_params,
-                 const Camera::ConstPtr& camera,
-                 DisplayQueue* display_queue)
+                 const Camera::ConstPtr& camera/*,
+                 DisplayQueue* display_queue*/)
     : landmark_count_(0),
       tracker_params_(tracker_params),
       camera_(camera),
       // Only for debugging and visualization:
       optical_flow_predictor_(nullptr),
-      display_queue_(display_queue),
+      // display_queue_(display_queue),
       output_images_path_("./outputImages/") {
   // Create the optical flow prediction module
   optical_flow_predictor_ =
@@ -177,12 +177,12 @@ void Tracker::featureTracking(Frame* ref_frame,
                                 cur_frame->landmarks_age_.end())
            << " vs. maxFeatureAge_: " << tracker_params_.maxFeatureAge_ << ")";
   // Display feature tracks together with predicted points.
-  if (display_queue_ && FLAGS_visualize_feature_predictions) {
-    displayImage(cur_frame->timestamp_,
-                 "feature_tracks_with_predicted_keypoints",
-                 getTrackerImage(*ref_frame, *cur_frame, px_predicted, px_ref),
-                 display_queue_);
-  }
+  // if (display_queue_ && FLAGS_visualize_feature_predictions) {
+  //   displayImage(cur_frame->timestamp_,
+  //                "feature_tracks_with_predicted_keypoints",
+  //                getTrackerImage(*ref_frame, *cur_frame, px_predicted, px_ref),
+  //                display_queue_);
+  // }
 
   // Fill debug information
   debug_info_.nrTrackerFeatures_ = cur_frame->keypoints_.size();

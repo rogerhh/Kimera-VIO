@@ -28,8 +28,8 @@
 #include "kimera-vio/imu-frontend/ImuFrontendParams.h"
 #include "kimera-vio/logging/Logger.h"
 #include "kimera-vio/pipeline/PipelineModule.h"
-#include "kimera-vio/visualizer/Display-definitions.h"
-#include "kimera-vio/visualizer/Visualizer3D-definitions.h"
+// #include "kimera-vio/visualizer/Display-definitions.h"
+// #include "kimera-vio/visualizer/Visualizer3D-definitions.h"
 
 DECLARE_bool(visualize_feature_tracks);
 DECLARE_bool(visualize_frontend_images);
@@ -49,7 +49,7 @@ class VisionImuFrontend {
  public:
   VisionImuFrontend(const ImuParams& imu_params,
                  const ImuBias& imu_initial_bias,
-                 DisplayQueue* display_queue,
+                 // DisplayQueue* display_queue,
                  bool log_output);
 
   virtual ~VisionImuFrontend();
@@ -156,7 +156,7 @@ class VisionImuFrontend {
   TrackerStatusSummary tracker_status_summary_;
 
   // Display queue
-  DisplayQueue* display_queue_;
+  // DisplayQueue* display_queue_;
 
   // Logger
   FrontendLogger::UniquePtr logger_;

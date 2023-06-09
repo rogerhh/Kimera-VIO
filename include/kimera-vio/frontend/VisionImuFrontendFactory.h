@@ -35,7 +35,7 @@ class VisionImuFrontendFactory {
       const ImuBias& imu_initial_bias,
       const FrontendParams& frontend_params,
       const Camera::ConstPtr& camera,
-      DisplayQueue* display_queue,
+      // DisplayQueue* display_queue,
       bool log_output) {
     switch (frontend_type) {
       case FrontendType::kMonoImu: {
@@ -43,7 +43,7 @@ class VisionImuFrontendFactory {
                                                     imu_initial_bias,
                                                     frontend_params,
                                                     camera,
-                                                    display_queue,
+                                                    // display_queue,
                                                     log_output);
       }
       case FrontendType::kStereoImu: {
@@ -68,7 +68,7 @@ class VisionImuFrontendFactory {
       const ImuBias& imu_initial_bias,
       const FrontendParams& frontend_params,
       const StereoCamera::ConstPtr& stereo_camera,
-      DisplayQueue* display_queue,
+      // DisplayQueue* display_queue,
       bool log_output) {
     switch (frontend_type) {
       case FrontendType::kMonoImu: {
@@ -80,7 +80,7 @@ class VisionImuFrontendFactory {
                                                       imu_initial_bias,
                                                       frontend_params,
                                                       stereo_camera,
-                                                      display_queue,
+                                                      // display_queue,
                                                       log_output);
       }
       default: {

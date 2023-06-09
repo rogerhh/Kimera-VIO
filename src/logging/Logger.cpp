@@ -279,95 +279,95 @@ void BackendLogger::logBackendFactorsStats(const BackendOutput& output) {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-MesherLogger::MesherLogger() : output_path_(FLAGS_output_path) {}
+// MesherLogger::MesherLogger() : output_path_(FLAGS_output_path) {}
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-VisualizerLogger::VisualizerLogger()
-    : output_mesh_("output_mesh.ply"),
-      output_landmarks_("output_landmarks.txt") {}
-
-void VisualizerLogger::logLandmarks(const PointsWithId& lmks) {
-  // Absolute vio errors
-  std::ofstream& output_landmarks_stream = output_landmarks_.ofstream_;
-  output_landmarks_stream << "Id\t"
-                          << "x\t"
-                          << "y\t"
-                          << "z\n";
-  for (const PointWithId& point : lmks) {
-    output_landmarks_stream << point.first << "\t" << point.second.x() << "\t"
-                            << point.second.y() << "\t" << point.second.z()
-                            << "\n";
-  }
-  output_landmarks_stream << std::endl;
-}
-
-void VisualizerLogger::logLandmarks(const cv::Mat& lmks) {
-  // cv::Mat each row has a lmk with x, y, z.
-  // Absolute vio errors
-  std::ofstream& output_landmarks_stream = output_landmarks_.ofstream_;
-  output_landmarks_stream << "x\t"
-                          << "y\t"
-                          << "z\n";
-  for (int i = 0; i < lmks.rows; i++) {
-    output_landmarks_stream << lmks.at<float>(i, 0) << "\t"
-                            << lmks.at<float>(i, 1) << "\t"
-                            << lmks.at<float>(i, 2) << "\n";
-  }
-  output_landmarks_stream << std::endl;
-}
-
-void VisualizerLogger::logMesh(const cv::Mat& lmks,
-                               const cv::Mat& colors,
-                               const cv::Mat& mesh,
-                               const double& timestamp,
-                               bool log_accumulated_mesh) {
-  std::ofstream& output_mesh_stream = output_mesh_.ofstream_;
-  bool& is_header_written = is_header_written_mesh_;
-
-  CHECK(output_mesh_stream) << "Output File Mesh: error writing.";
-  // Number of vertices in the mesh.
-  int vertex_count = lmks.rows;
-  // Number of faces in the mesh.
-  int faces_count = std::round(mesh.rows / 4);
-  // First, write header, but only once.
-  if (!is_header_written || !log_accumulated_mesh) {
-    output_mesh_stream << "ply\n"
-                       << "format ascii 1.0\n"
-                       << "comment Mesh from KIMERA VIO at timestamp "
-                       << timestamp << "\n"
-                       << "element vertex " << vertex_count << "\n"
-                       << "property float x\n"
-                       << "property float y\n"
-                       << "property float z\n"
-                       << "property uchar red\n"  // Start of vertex color.
-                       << "property uchar green\n"
-                       << "property uchar blue\n"
-                       << "element face " << faces_count << "\n"
-                       << "property list uchar int vertex_indices\n"
-                       << "end_header\n";
-    is_header_written = true;
-  }
-
-  // Second, log vertices.
-  for (int i = 0; i < lmks.rows; i++) {
-    output_mesh_stream << lmks.at<float>(i, 0) << " "  // Log vertices x y z.
-                       << lmks.at<float>(i, 1) << " " << lmks.at<float>(i, 2)
-                       << " " << int(colors.at<uint8_t>(i, 0))
-                       << " "  // Log vertices colors.
-                       << int(colors.at<uint8_t>(i, 1)) << " "
-                       << int(colors.at<uint8_t>(i, 2)) << " \n";
-  }
-  // Finally, log faces.
-  for (int i = 0; i < faces_count; i++) {
-    // Assumes the mesh is made of triangles
-    int index = i * 4;
-    output_mesh_stream << mesh.at<int32_t>(index) << " "
-                       << mesh.at<int32_t>(index + 1) << " "
-                       << mesh.at<int32_t>(index + 2) << " "
-                       << mesh.at<int32_t>(index + 3) << " \n";
-  }
-  output_mesh_stream << std::endl;
-}
+// VisualizerLogger::VisualizerLogger()
+//     : output_mesh_("output_mesh.ply"),
+//       output_landmarks_("output_landmarks.txt") {}
+// 
+// void VisualizerLogger::logLandmarks(const PointsWithId& lmks) {
+//   // Absolute vio errors
+//   std::ofstream& output_landmarks_stream = output_landmarks_.ofstream_;
+//   output_landmarks_stream << "Id\t"
+//                           << "x\t"
+//                           << "y\t"
+//                           << "z\n";
+//   for (const PointWithId& point : lmks) {
+//     output_landmarks_stream << point.first << "\t" << point.second.x() << "\t"
+//                             << point.second.y() << "\t" << point.second.z()
+//                             << "\n";
+//   }
+//   output_landmarks_stream << std::endl;
+// }
+// 
+// void VisualizerLogger::logLandmarks(const cv::Mat& lmks) {
+//   // cv::Mat each row has a lmk with x, y, z.
+//   // Absolute vio errors
+//   std::ofstream& output_landmarks_stream = output_landmarks_.ofstream_;
+//   output_landmarks_stream << "x\t"
+//                           << "y\t"
+//                           << "z\n";
+//   for (int i = 0; i < lmks.rows; i++) {
+//     output_landmarks_stream << lmks.at<float>(i, 0) << "\t"
+//                             << lmks.at<float>(i, 1) << "\t"
+//                             << lmks.at<float>(i, 2) << "\n";
+//   }
+//   output_landmarks_stream << std::endl;
+// }
+// 
+// void VisualizerLogger::logMesh(const cv::Mat& lmks,
+//                                const cv::Mat& colors,
+//                                const cv::Mat& mesh,
+//                                const double& timestamp,
+//                                bool log_accumulated_mesh) {
+//   std::ofstream& output_mesh_stream = output_mesh_.ofstream_;
+//   bool& is_header_written = is_header_written_mesh_;
+// 
+//   CHECK(output_mesh_stream) << "Output File Mesh: error writing.";
+//   // Number of vertices in the mesh.
+//   int vertex_count = lmks.rows;
+//   // Number of faces in the mesh.
+//   int faces_count = std::round(mesh.rows / 4);
+//   // First, write header, but only once.
+//   if (!is_header_written || !log_accumulated_mesh) {
+//     output_mesh_stream << "ply\n"
+//                        << "format ascii 1.0\n"
+//                        << "comment Mesh from KIMERA VIO at timestamp "
+//                        << timestamp << "\n"
+//                        << "element vertex " << vertex_count << "\n"
+//                        << "property float x\n"
+//                        << "property float y\n"
+//                        << "property float z\n"
+//                        << "property uchar red\n"  // Start of vertex color.
+//                        << "property uchar green\n"
+//                        << "property uchar blue\n"
+//                        << "element face " << faces_count << "\n"
+//                        << "property list uchar int vertex_indices\n"
+//                        << "end_header\n";
+//     is_header_written = true;
+//   }
+// 
+//   // Second, log vertices.
+//   for (int i = 0; i < lmks.rows; i++) {
+//     output_mesh_stream << lmks.at<float>(i, 0) << " "  // Log vertices x y z.
+//                        << lmks.at<float>(i, 1) << " " << lmks.at<float>(i, 2)
+//                        << " " << int(colors.at<uint8_t>(i, 0))
+//                        << " "  // Log vertices colors.
+//                        << int(colors.at<uint8_t>(i, 1)) << " "
+//                        << int(colors.at<uint8_t>(i, 2)) << " \n";
+//   }
+//   // Finally, log faces.
+//   for (int i = 0; i < faces_count; i++) {
+//     // Assumes the mesh is made of triangles
+//     int index = i * 4;
+//     output_mesh_stream << mesh.at<int32_t>(index) << " "
+//                        << mesh.at<int32_t>(index + 1) << " "
+//                        << mesh.at<int32_t>(index + 2) << " "
+//                        << mesh.at<int32_t>(index + 3) << " \n";
+//   }
+//   output_mesh_stream << std::endl;
+// }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 FrontendLogger::FrontendLogger()
