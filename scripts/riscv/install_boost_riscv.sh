@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 source $SCRIPT_DIR/env.sh
 
@@ -13,11 +15,15 @@ fi
 
 cd $BOOST_DIR
 
-./bootstrap.sh --prefix=$INSTALL_DIR --with-libraries="serialization,system,fileystem,thread,program_options,date_time,timer,chrono,regex"
+rm $BOOST_DIR/project-config.jam*
 
-# Change project-config.jam
+./bootstrap.sh --prefix=$INSTALL_DIR --with-libraries="serialization,system,filesystem,thread,program_options,date_time,timer,chrono,regex"
+
+# # Change project-config.jam
 echo -e "$SCRIPT_PROMPT Manually patching: $BOOST_DIR/project-config.jam"
-cp $PATCH_DIR/boost/project-config.jam $BOOST_DIR/project-config.jam
+sed -i -e "s/using gcc ;/using gcc : riscv : riscv64-unknown-linux-gnu-g++ ;/" $BOOST_DIR/project-config.jam
 
 echo -e "${SCRIPT_PROMPT} Installing Boost to: ${INSTALL_DIR}"
 ./b2 link=static toolset=gcc-riscv install
+
+exit 0

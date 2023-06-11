@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fails the execution whenever there is an error
+set -e
+
 SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 source $SCRIPT_DIR/env.sh
 

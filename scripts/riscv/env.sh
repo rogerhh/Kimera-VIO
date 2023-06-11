@@ -1,6 +1,9 @@
 #!/bin/bash
 
-source color.sh
+set -e
+
+SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+source $SCRIPT_DIR/color.sh
 
 export SCRIPT_PROMPT="${GREEN}${BOLD}[Kimera-VIO RISC-V Install]${NC}${UNBOLD}"
 export PROJECT_DIR="$(readlink -f ${SCRIPT_DIR}/../../..)"
