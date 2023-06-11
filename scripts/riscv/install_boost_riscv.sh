@@ -25,5 +25,3 @@ sed -i -e "s/using gcc ;/using gcc : riscv : riscv64-unknown-linux-gnu-g++ ;/" $
 
 echo -e "${SCRIPT_PROMPT} Installing Boost to: ${INSTALL_DIR}"
 ./b2 link=static toolset=gcc-riscv install
-
-exit 0
