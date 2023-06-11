@@ -21,7 +21,7 @@ message(STATUS "====================  Dependencies ===========================")
 
 ### System Dependencies
 find_package(Boost REQUIRED COMPONENTS
-    filesystem serialization regex timer date_time thread PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
+    filesystem serialization regex timer date_time thread PATHS "${CMAKE_INSTALL_PREFIX}" NO_DEFAULT_PATH)
 if(NOT TARGET Boost::boost)
   add_library(Boost::boost INTERFACE IMPORTED)
   set_target_properties(Boost::boost PROPERTIES
@@ -29,21 +29,20 @@ if(NOT TARGET Boost::boost)
   INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
 endif()
 
-# find_package(Gflags REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 find_package(Gflags REQUIRED)
-# find_package(Glog 0.3.5 REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
 find_package(Glog 0.3.5 REQUIRED)
-find_package(GTSAM REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
-find_package(opengv REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
-find_package(OpenCV REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
-find_package(DBoW2 REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
+# Roger fix: Force path
+find_package(GTSAM REQUIRED PATHS "${CMAKE_INSTALL_PREFIX}" NO_DEFAULT_PATH)
+find_package(opengv REQUIRED PATHS "${CMAKE_INSTALL_PREFIX}" NO_DEFAULT_PATH)
+find_package(OpenCV REQUIRED PATHS "${CMAKE_INSTALL_PREFIX}" NO_DEFAULT_PATH)
+find_package(DBoW2 REQUIRED PATHS "${CMAKE_INSTALL_PREFIX}" NO_DEFAULT_PATH)
 if(NOT TARGET DBoW2::DBoW2)
   add_library(DBoW2::DBoW2 INTERFACE IMPORTED)
   set_target_properties(DBoW2::DBoW2 PROPERTIES
   INTERFACE_LINK_LIBRARIES "${DBoW2_LIBRARIES}"
   INTERFACE_INCLUDE_DIRECTORIES "${DBoW2_INCLUDE_DIRS}")
 endif()
-find_package(KimeraRPGO REQUIRED PATHS "/home/ubuntu/dependencies/local" NO_DEFAULT_PATH)
+find_package(KimeraRPGO REQUIRED PATHS "${CMAKE_INSTALL_PREFIX}" NO_DEFAULT_PATH)
 # Pangolin is optional
 find_package(Pangolin QUIET)
 

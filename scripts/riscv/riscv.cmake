@@ -24,18 +24,12 @@ message( "RISC-V Cross Compile: ${CROSS_COMPILE}" )
 
 # The Generic system name is used for embedded targets (targets without OS) in
 # CMake
-# Roger fix 6/3/2023: OpenCV checks CMAKE_SYSTEM_NAME
 set( CMAKE_CROSSCOMPILING       ON )
 set( CMAKE_SYSTEM_NAME          Linux )
 set( CMAKE_SYSTEM_PROCESSOR     rv64imafd )
-# set( CMAKE_SYSTEM_PROCESSOR     rv64i )
 set( CMAKE_EXECUTABLE_SUFFIX    ".elf")
 
-# specify the cross compiler. We force the compiler so that CMake doesn't
-# attempt to build a simple test program as this will fail without us using
-# the -nostartfiles option on the command line
-# CMAKE_FORCE_C_COMPILER( "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}gcc${RISCV_TOOLCHAIN_BIN_EXT}" GNU )
-# CMAKE_FORCE_CXX_COMPILER( "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}g++${RISCV_TOOLCHAIN_BIN_EXT}" GNU )
+# specify the cross compiler. 
 set(CMAKE_ASM_COMPILER ${CROSS_COMPILE}gcc )
 set(CMAKE_AR ${CROSS_COMPILE}ar)
 set(CMAKE_ASM_COMPILER ${CROSS_COMPILE}gcc)
@@ -56,13 +50,12 @@ unset( CMAKE_C_FLAGS CACHE )
 unset( CMAKE_CXX_FLAGS CACHE )
 
 # Set the CMAKE C flags (which should also be used by the assembler!
-set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fPIC" )
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fPIC" )
+set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
 set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=${CMAKE_SYSTEM_PROCESSOR}" )
 
 set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" FORCE )
 set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" FORCE )
 set( CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" FORCE )
-# set( CMAKE_EXE_LINKER_FLAGS   "${CMAKE_EXE_LINKER_FLAGS}  -march=${CMAKE_SYSTEM_PROCESSOR}    -nostartfiles   " )
-set( CMAKE_EXE_LINKER_FLAGS   "${CMAKE_EXE_LINKER_FLAGS}  -march=${CMAKE_SYSTEM_PROCESSOR} " )
-# set( CMAKE_EXE_LINKER_FLAGS   "${CMAKE_EXE_LINKER_FLAGS} -nostartfiles " )
+
+set( CMAKE_EXE_LINKER_FLAGS   "${CMAKE_EXE_LINKER_FLAGS} -march=${CMAKE_SYSTEM_PROCESSOR}" )

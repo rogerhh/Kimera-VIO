@@ -2,33 +2,22 @@
 
 SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 source $SCRIPT_DIR/env.sh
-PROJECT_DIR=$SCRIPT_DIR/..
-INSTALL_DIR=/usr/local
 
-if [[ ! -z $1 ]]
-then
-    $INSTALL_DIR=$1
-fi
-
-function check_if_user_has_sudo() {
-    if [[ $(sudo -v) == "*may not run sudo*" ]]
-    then
-        return 1
-    else 
-        return 0
-    fi
-}
+echo -e "${SCRIPT_PROMPT} Downloading Boost source to: ${BOOST_DIR}"
 
 cd $PROJECT_DIR
-if [ ! -d $PROJECT_DIR/boost ]
+if [ ! -d $BOOST_DIR ]
 then
     git clone --recursive https://github.com/boostorg/boost.git 
 fi
 
-cd $PROJECT_DIR/boost
+cd $BOOST_DIR
 
 ./bootstrap.sh --prefix=$INSTALL_DIR --with-libraries="serialization,system,fileystem,thread,program_options,date_time,timer,chrono,regex"
 
 # Change project-config.jam
+echo -e "$SCRIPT_PROMPT Manually patching: $BOOST_DIR/project-config.jam"
+cp $PATCH_DIR/boost/project-config.jam $BOOST_DIR/project-config.jam
 
+echo -e "${SCRIPT_PROMPT} Installing Boost to: ${INSTALL_DIR}"
 ./b2 link=static toolset=gcc-riscv install

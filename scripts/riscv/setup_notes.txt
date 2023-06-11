@@ -92,7 +92,7 @@ Roger:
         - Fix: Cast pointer addition to size_t
     - Error while linking: cannot find -lgtk-3, -lgkd-3, -lpangocairo-1.0 -lpango-1.0 -lharfbuzz -latk-1.0 -lcairo-gobject -lcairo -lgdk_pixbuf -gio-2.0 -lgobject-2.0 -lglib-2.0 -lgthread-2.0
         - Fix: -DWITH_GTK=OFF
-    - Current working CMake command: cmake -DCMAKE_INSTALL_PREFIX=/home/ubuntu/dependencies/local -DCMAKE_TOOLCHAIN_FILE=/home/ubuntu/dependencies/riscv.cmake -DBUILD_SHARED_LIB=OFF -DWITH_JPEG=OFF -DWITH_PNG=OFF -DWITH_WEBP=OFF -DWITH_TIFF=OFF -DWITH_JASPER=OFF -DWITH_OPENEXR=OFF -DWITH_GTK=OFF  ..
+    - Current working CMake command: cmake -DCMAKE_INSTALL_PREFIX=/home/ubuntu/dependencies/local -DCMAKE_TOOLCHAIN_FILE=/home/ubuntu/dependencies/riscv.cmake -DBUILD_SHARED_LIB=OFF -DWITH_JPEG=OFF -DWITH_PNG=OFF -DWITH_WEBP=OFF -DWITH_TIFF=OFF -DWITH_JASPER=OFF -DWITH_OPENEXR=OFF -DWITH_GTK=OFF -DBUILD_ZLIB=ON ..
 
 2023/06/06
 Roger:
@@ -148,7 +148,7 @@ Roger:
   586 | void* operator new[](size_t size) throw(std::bad_alloc) {
         - Problem: seems like c++17 is specified somewhere 
         - Fix: cmake -DCMAKE_TOOLCHAIN_FILE=/home/ubuntu/dependencies/riscv.cmake -DCMAKE_INSTALL_PREFIX=/home/ubuntu/dependencies/local -DBUILD_SHARED_LIBS=OFF -DINSTALL_SHARED_LIBS=OFF -DCMAKE_CXX_STANDARD=11 ..
-    - Finish compiling gflags
+    - Finish compiling glog
 
     - Compiling Kimera-VIO
     - Add option to build static lib with BUILD_SHARED_LIBS=OFF
@@ -190,6 +190,7 @@ Roger:
         src/visualizer/OpenCvVisualizer3D.cpp
 
     - We should disable mesher and visualizer completely
+    - Also, Set -DKIMERA_BUILD_TESTS=OFF
 
     - Error while compiling: /home/ubuntu/chipyard/.conda-env/riscv-tools/bin/../lib/gcc/riscv64-unknown-linux-gnu/12.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: /usr/local/lib/libDBoW2.so: error adding symbols: file in wrong format
         - Problem: seems like DBoW2_LIBRARY=/usr/local/lib/libDBoW2.so
@@ -203,8 +204,34 @@ Roger:
 
     - Everything Compiled!!!
 
+06/10/2023:
+Roger:
+    - Set up one-button script for riscv compilation on A machines
+    - OpenCV failed with error: 
+        /scratch/roger_hsiao/kimera-riscv/opencv_contrib/modules/stereo/src/descriptor.cpp:229:34: error: ordered comparison of pointer with integer zero ('const int*' and 'int')
+  229 |             CV_Assert(image.size > 0);
+        - Fix: Dereference image.size then compare
+    - OpenCV failed with error:
+        /scratch/roger_hsiao/kimera-riscv/opencv_contrib/modules/rgbd/src/odometry.cpp:41:10: fatal error: unsupported/Eigen/MatrixFunctions: No such file or directory
+   41 | #include <unsupported/Eigen/MatrixFunctions>
+      Fix: -D GTSAM_WITH_EIGEN_UNSUPPORTED=ON \
+
+    - Boost compiles
+    - gtsam compiles
+    - opencv compiles
+    - opengv compiles
+
+    - Error compiling DBoW2: 
+        /scratch/roger_hsiao/chipyard/.conda-env/riscv-tools/bin/../lib/gcc/riscv64-unknown-linux-gnu/12.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: cannot find -lfreetype: No such file or directory
+        /scratch/roger_hsiao/chipyard/.conda-env/riscv-tools/bin/../lib/gcc/riscv64-unknown-linux-gnu/12.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: cannot find -lharfbuzz: No such file or directory
+        - Fix: -DBUILD_Demo=OFF
+    - DBoW2 compiles
+    - Kimera-RPGO compiles
+
+    - Error compiling glog:
+        /scratch/roger_hsiao/chipyard/.conda-env/riscv-tools/bin/../lib/gcc/riscv64-unknown-linux-gnu/12.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: /scratch/roger_hsiao/kimera/local/lib/libgflags.so.2.2.2: error adding symbols: file in wrong format
+        - Fix: It was sourcing kimera/local/lib instead of kimera-riscv/local/lib
 
 
 
 
-TODO: Try to compile everything into a static library

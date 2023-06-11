@@ -31,7 +31,7 @@ git clone https://github.com/MIT-SPARK/Kimera-VIO.git
 cd Kimera-VIO && mkdir build && cd build && cmake .. && make -j$(nproc)
 
 # Download and extract EuRoC dataset.
-sudo pt-get update && sudo apt-get install -y wget
+sudo apt-get update && sudo apt-get install -y wget
 wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_01_easy/V1_01_easy.zip
 mkdir -p $PROJECT_DIR/euroc && unzip V1_01_easy.zip -d $PROJECT_DIR/euroc
 

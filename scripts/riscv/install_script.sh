@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
-PROJECT_DIR=$SCRIPT_DIR/..
-INSTALL_DIR="/usr/local"
+export PROJECT_DIR=${SCRIPT_DIR}/../..
+export INSTALL_DIR="${PROJECT_DIR}/local"
 
 function check_if_user_has_sudo() {
     if [[ $(sudo -v) == "*may not run sudo*" ]]

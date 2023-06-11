@@ -29,3 +29,5 @@
 
 % Ignore python bytecode
 *.pyc
+
+*.swp
