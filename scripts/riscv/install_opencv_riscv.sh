@@ -43,12 +43,13 @@ cmake ${CMAKE_COMMON_FLAGS} \
       -D WITH_OPENEXR=OFF \
       -D WITH_GTK=OFF \
       -D BUILD_ZLIB=ON \
-      -D BUILD_opencv_freetype=OFF \
       -D BUILD_opencv_python=OFF \
       -D BUILD_opencv_python2=OFF \
       -D BUILD_opencv_python3=OFF \
       -D ENABLE_CXX11=ON \
       -D OPENCV_EXTRA_MODULES_PATH=${PROJECT_DIR}/opencv_contrib/modules \
+      -D BUILD_opencv_freetype=OFF \
+      -D BUILD_opencv_java=OFF \
       .. \
       --trace 2>&1 | tee cmake.out
 
