@@ -3,7 +3,6 @@
 set -e
 
 SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
-source $SCRIPT_DIR/color.sh
 source $SCRIPT_DIR/env.sh
 
 cd $PROJECT_DIR
@@ -36,7 +35,8 @@ cd $OPENCV_DIR && mkdir -p build && cd build
 cmake ${CMAKE_COMMON_FLAGS} \
       -D CMAKE_BUILD_TYPE=Release \
       -D WITH_JPEG=OFF \
-      -D WITH_PNG=OFF \
+      -D WITH_PNG=ON \
+      -D BUILD_PNG=ON \
       -D WITH_WEBP=OFF \
       -D WITH_TIFF=OFF \
       -D WITH_JASPER=OFF \

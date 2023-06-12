@@ -233,5 +233,5 @@ Roger:
         - Fix: It was sourcing kimera/local/lib instead of kimera-riscv/local/lib
 
 
-
+    - To support Euroc, we need libpng, when compiling opencv, -D WITH_PNG=ON -D BUILD_PNG=ON
 

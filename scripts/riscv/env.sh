@@ -15,6 +15,8 @@ export CMAKE_COMMON_FLAGS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${C
 export CHIPYARD_HOME="$(realpath "${PROJECT_DIR}")"
 
 export BOOST_DIR=${PROJECT_DIR}/boost
+export LIBPNG_DIR=${PROJECT_DIR}/libpng
+export ZLIB_DIR=${PROJECT_DIR}/zlib
 export OPENCV_DIR=${PROJECT_DIR}/opencv
 export OPENCV_CONTRIB_DIR=${PROJECT_DIR}/opencv_contrib
 export OPENGV_DIR=${PROJECT_DIR}/opengv
