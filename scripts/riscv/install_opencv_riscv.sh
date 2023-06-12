@@ -30,6 +30,8 @@ echo -e "$SCRIPT_PROMPT Manually patching $OPENCV_DIR/cmake/OpenCVFindLibsPerf.c
 cp ${PATCH_DIR}/opencv/OpenCVFindLibsPerf.cmake $OPENCV_DIR/cmake/OpenCVFindLibsPerf.cmake
 echo -e "$SCRIPT_PROMPT Manually patching $OPENCV_CONTRIB_DIR/modules/stereo/src/descriptor.cpp"
 cp ${PATCH_DIR}/opencv/descriptor.cpp $OPENCV_CONTRIB_DIR/modules/stereo/src/descriptor.cpp
+echo -e "$SCRIPT_PROMPT Manually patching $OPENCV_CONTRIB_DIR/modules/sfm/CMakeLists.txt"
+cp ${PATCH_DIR}/opencv_contrib/sfm/CMakeLists.txt $OPENCV_CONTRIB_DIR/modules/sfm/CMakeLists.txt
 
 cd $OPENCV_DIR && mkdir -p build && cd build 
     
@@ -50,6 +52,7 @@ cmake ${CMAKE_COMMON_FLAGS} \
       -D OPENCV_EXTRA_MODULES_PATH=${PROJECT_DIR}/opencv_contrib/modules \
       -D BUILD_opencv_freetype=OFF \
       -D BUILD_opencv_java=OFF \
+      -D BUILD_opencv_sfm=OFF \
       .. \
       --trace 2>&1 | tee cmake.out
 
