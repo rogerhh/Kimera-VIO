@@ -15,7 +15,7 @@ fi
 
 cd $BOOST_DIR
 
-rm $BOOST_DIR/project-config.jam*
+rm -f $BOOST_DIR/project-config.jam*
 
 ./bootstrap.sh --prefix=$INSTALL_DIR --with-libraries="serialization,system,filesystem,thread,program_options,date_time,timer,chrono,regex"
 
