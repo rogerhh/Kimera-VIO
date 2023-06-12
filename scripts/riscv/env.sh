@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -o pipefail # Set pipe exit status to be the status of the last command before pipe
 
 SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 source $SCRIPT_DIR/color.sh
