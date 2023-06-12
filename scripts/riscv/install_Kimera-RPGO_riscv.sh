@@ -23,4 +23,4 @@ cmake ${CMAKE_COMMON_FLAGS} \
       .. \
       --trace 2>&1 | tee cmake.out
 
-make -j$(nproc) install | tee make.out
+make -j$(nproc) install 2>&1 | tee make.out
