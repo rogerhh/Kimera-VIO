@@ -7,7 +7,7 @@ SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 source $SCRIPT_DIR/color.sh
 
 # Use this to determing if installing RISCV
-export NO_RISCV=1
+export NO_RISCV=0
 
 export SCRIPT_PROMPT="${GREEN}${BOLD}[Kimera-VIO RISC-V Install]${NC}${UNBOLD}"
 export PROJECT_DIR="$(readlink -f ${SCRIPT_DIR}/../../..)"
