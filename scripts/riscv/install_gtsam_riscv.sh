@@ -33,4 +33,4 @@ cmake ${CMAKE_COMMON_FLAGS} \
       .. \
       2>&1 | tee cmake.out
 
-make -j$(nrpoc) install 2>&1 | tee make.out
+make -j$(nproc) install 2>&1 | tee make.out
