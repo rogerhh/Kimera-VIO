@@ -22,6 +22,8 @@ cd $GTSAM_DIR && mkdir -p build && cd build
 
 echo -e "$SCRIPT_PROMPT Manually patching $GTSAM_DIR/CMakeLists.txt"
 cp $PATCH_DIR/gtsam/CMakeLists.txt $GTSAM_DIR/CMakeLists.txt
+echo -e "$SCRIPT_PROMPT Manually patching $GTSAM_DIR/cmake/Config.cmake.in"
+cp $PATCH_DIR/gtsam/Config.cmake.in $GTSAM_DIR/cmake/Config.cmake.in
 
 cmake ${CMAKE_COMMON_FLAGS} \
       -D GTSAM_BUILD_TESTS=OFF \
@@ -31,6 +33,6 @@ cmake ${CMAKE_COMMON_FLAGS} \
       -D GTSAM_BUILD_WITH_MARCH_NATIVE=OFF \
       -D GTSAM_WITH_EIGEN_UNSUPPORTED=ON \
       .. \
-      2>&1 | tee cmake.out
+      --trace 2>&1 | tee cmake.out
 
 make -j$(nproc) install 2>&1 | tee make.out
