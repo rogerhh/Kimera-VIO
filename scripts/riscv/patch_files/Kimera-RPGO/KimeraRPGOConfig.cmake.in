@@ -3,15 +3,15 @@ include(CMakeFindDependencyMacro)
 
 list(APPEND CMAKE_MODULE_PATH ${KimeraRPGO_CMAKE_DIR})
 
-find_dependency(Boost REQUIRED)
+find_dependency(Boost REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
 if(NOT TARGET Boost::boost)
   add_library(Boost::boost INTERFACE IMPORTED)
   set_target_properties(Boost::boost PROPERTIES
   INTERFACE_LINK_LIBRARIES "${Boost_LIBRARIES}"
   INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
 endif()
-find_dependency(GTSAM REQUIRED)
-find_package(GTSAM_UNSTABLE QUIET)
+find_dependency(GTSAM REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
+find_package(GTSAM_UNSTABLE REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
 
 list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
