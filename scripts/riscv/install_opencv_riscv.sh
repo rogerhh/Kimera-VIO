@@ -30,6 +30,13 @@ cp ${PATCH_DIR}/opencv/OpenCVFindLibsPerf.cmake $OPENCV_DIR/cmake/OpenCVFindLibs
 echo -e "$SCRIPT_PROMPT Manually patching $OPENCV_CONTRIB_DIR/modules/stereo/src/descriptor.cpp"
 cp ${PATCH_DIR}/opencv/descriptor.cpp $OPENCV_CONTRIB_DIR/modules/stereo/src/descriptor.cpp
 
+is_ubuntu_20
+if [[ $IS_UBUNTU_20 == 1 ]]
+then
+    echo -e "$SCRIPT_PROMPT OS is Ubuntu 20, Manually patching ${OPENCV_DIR}/modules/videoio/src/cap_ffmpeg_impl.hpp"
+    cp ${PATCH_DIR}/opencv/cap_ffmpeg_impl.hpp ${OPENCV_DIR}/modules/videoio/src/cap_ffmpeg_impl.hpp
+fi
+
 cd $OPENCV_DIR && mkdir -p build && cd build 
     
 cmake ${CMAKE_COMMON_FLAGS} \

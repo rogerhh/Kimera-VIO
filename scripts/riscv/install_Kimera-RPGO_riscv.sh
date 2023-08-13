@@ -16,6 +16,8 @@ fi
 
 echo -e "$SCRIPT_PROMPT Manually patching $KIMERA_RPGO_DIR/CMakeLists.txt"
 cp ${PATCH_DIR}/Kimera-RPGO/CMakeLists.txt $KIMERA_RPGO_DIR/CMakeLists.txt
+echo -e "$SCRIPT_PROMPT Manually patching $KIMERA_RPGO_DIR/cmake/KimeraRPGOConfig.cmake.in"
+cp ${PATCH_DIR}/Kimera-RPGO/KimeraRPGOConfig.cmake.in $KIMERA_RPGO_DIR/cmake/KimeraRPGOConfig.cmake.in
 
 cd $KIMERA_RPGO_DIR && mkdir -p build && cd build
 

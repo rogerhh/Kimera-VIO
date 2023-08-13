@@ -16,6 +16,8 @@ fi
 
 echo -e "$SCRIPT_PROMPT Manually patching $DBOW2_DIR/CMakeLists.txt"
 cp ${PATCH_DIR}/DBoW2/CMakeLists.txt $DBOW2_DIR/CMakeLists.txt
+echo -e "$SCRIPT_PROMPT Manually patching $DBOW2_DIR/src/DBoW2.cmake.in"
+cp ${PATCH_DIR}/DBoW2/DBoW2.cmake.in $DBOW2_DIR/src/DBoW2.cmake.in
 
 cd $DBOW2_DIR && mkdir -p build && cd build
    

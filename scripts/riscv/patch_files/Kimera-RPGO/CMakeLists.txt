@@ -12,15 +12,17 @@ ENDIF()
 
 ###########################################################################
 # Find GTSAM
-find_package(GTSAM REQUIRED)
+find_package(GTSAM REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
 if (NOT GTSAM_FOUND)
   message(FATAL_ERROR "This program requires the GTSAM library.")
 endif(NOT GTSAM_FOUND)
-find_package(GTSAM_UNSTABLE QUIET)
+find_package(GTSAM_UNSTABLE REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
 
 ###########################################################################
 # Find Boost
-find_package(Boost REQUIRED COMPONENTS filesystem regex timer date_time program_options)
+find_package(Boost REQUIRED COMPONENTS filesystem regex timer date_time program_options 
+    PATHS ${CMAKE_INSTALL_PREFIX}
+    NO_DEFAULT_PATH)
 if(NOT TARGET Boost::boost)
   add_library(Boost::boost INTERFACE IMPORTED)
   set_target_properties(Boost::boost PROPERTIES
