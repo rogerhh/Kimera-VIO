@@ -40,7 +40,7 @@ fi
 
 if [ $COMPILE_INDEX -le 1 ] 
 then
-source ${SCRIPT_DIR}/install_gtsam_riscv.sh
+source ${SCRIPT_DIR}/install_igo-gtsam_riscv.sh
 fi
 
 if [ $COMPILE_INDEX -le 2 ] 
