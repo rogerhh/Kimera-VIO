@@ -12,6 +12,8 @@ if [ ! -d $KIMERA_RPGO_DIR ]
 then
     # Install RobustPGO
     git clone https://github.com/MIT-SPARK/Kimera-RPGO.git
+    cd $KIMERA_RPGO_DIR
+    git checkout e4b1e40
 fi
 
 echo -e "$SCRIPT_PROMPT Manually patching $KIMERA_RPGO_DIR/CMakeLists.txt"
